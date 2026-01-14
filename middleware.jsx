@@ -28,16 +28,7 @@ export function middleware(req) {
         return NextResponse.redirect(url)
     }
 
-    if (
-        pathname.startsWith("/operadores") ||
-        pathname.startsWith("/api/operadores")
-    ) {
-        if (usuario.role !== "Administradores") {
-            const url = req.nextUrl.clone()
-            url.pathname = "/"
-            return NextResponse.redirect(url)
-        }
-    }
+
 
     return NextResponse.next()
 }

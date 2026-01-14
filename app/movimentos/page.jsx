@@ -1,9 +1,9 @@
 "use client"
-import {useEffect, useState, useTransition} from "react"
-import {useRouter} from "next/navigation"
+import { useEffect, useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 import logo from "@/assets/logo2.png"
-import {PlusCircle, Plus, Save, X, Trash2} from "lucide-react"
+import { PlusCircle, Plus, Save, X, Trash2 } from "lucide-react"
 import Modal from "@/app/components/modal"
 
 export default function MovimentosPage() {
@@ -21,7 +21,7 @@ export default function MovimentosPage() {
     const [filtroTipoMov, setFiltroTipoMov] = useState("Todos")
     const [filtroDataInicio, setFiltroDataInicio] = useState('')
     const [filtroDataFim, setFiltroDataFim] = useState('')
-    const [notification, setNotification] = useState({text: '', type: ''})
+    const [notification, setNotification] = useState({ text: '', type: '' })
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [itensTemporarios, setItensTemporarios] = useState([])
@@ -29,10 +29,10 @@ export default function MovimentosPage() {
     const [modalQuantidade, setModalQuantidade] = useState(1)
 
     const showNotification = (text, type, duration = 2000) => {
-        setNotification({text, type});
+        setNotification({ text, type });
         if (type !== 'isLoading') {
             setTimeout(() => {
-                setNotification({text: '', type: 'info'})
+                setNotification({ text: '', type: 'info' })
             }, duration)
         }
     }
@@ -66,7 +66,7 @@ export default function MovimentosPage() {
         if (itemExistente) {
             const novosItens = itensTemporarios.map(item =>
                 item.produto_id === modalProdutoId
-                    ? {...item, quantidade: item.quantidade + parseInt(modalQuantidade)}
+                    ? { ...item, quantidade: item.quantidade + parseInt(modalQuantidade) }
                     : item
             )
             setItensTemporarios(novosItens);
@@ -129,7 +129,7 @@ export default function MovimentosPage() {
         try {
             const res = await fetch("/api/movimentos", {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(movimentosParaSalvar),
             })
             const data = await res.json()
@@ -178,7 +178,7 @@ export default function MovimentosPage() {
     if (isLoading || isPending || !usuarioLogado) {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen ">
-                <Image src={logo} alt="Logo" className="w-[80px] h-[80px] mb-4 animate-pulse"/>
+                <Image src={logo} alt="Logo" className="w-[80px] h-[80px] mb-4 animate-pulse" />
             </div>
         )
     }
@@ -201,56 +201,56 @@ export default function MovimentosPage() {
                     onClose={handleFecharModal}
                     title="Adicionar Produtos para Movimentação">
 
-                        <form onSubmit={handleAddItemAoModal}
-                              className="grid grid-cols-2 items-end text-gray-300 gap-3 mb-6">
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Produto</label>
-                                <select value={modalProdutoId}
-                                        onChange={(e) => setModalProdutoId(e.target.value)}
-                                        className=" w-full p-2 bg-slate-700 rounded-lg">
-                                    <option value="">Selecione...</option>
-                                    {produtos.map((p) => <option key={p.id} value={p.id}>{p.nome}</option>)}
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Tipo</label>
-                                <select value={tipo}
-                                        onChange={(e) => setTipo(e.target.value)}
-                                        className="w-full p-2 bg-slate-700 rounded-lg h-[42px]">
-                                    <option>Entrada</option>
-                                    <option>Saída</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Quantidade</label>
-                                <input type="text" min="1"
-                                       value={modalQuantidade}
-                                       onChange={(e) => setModalQuantidade(e.target.value)}
-                                       className="w-full p-2 bg-slate-700 rounded-lg"/>
-                            </div>
-                            <div className="block text-sm font-medium mb-1">
-                                <label className="block text-sm font-medium mb-1">Observação</label>
-                                <input type="text" value={observacao.toUpperCase()}
-                                       onChange={(e) => setObservacao(e.target.value)}
-                                       className="w-full p-2 bg-slate-700 rounded-lg h-[50px]"/>
-                            </div>
-                            <button type="submit"
-                                    className="md:col-start-3 flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700">
-                                <PlusCircle size={20}/> Adicionar
-                            </button>
-                        </form>
+                    <form onSubmit={handleAddItemAoModal}
+                        className="grid grid-cols-2 items-end text-gray-300 gap-3 mb-6">
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Produto</label>
+                            <select value={modalProdutoId}
+                                onChange={(e) => setModalProdutoId(e.target.value)}
+                                className=" w-full p-2 bg-slate-700 rounded-lg">
+                                <option value="">Selecione...</option>
+                                {produtos.map((p) => <option key={p.id} value={p.id}>{p.nome}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Tipo</label>
+                            <select value={tipo}
+                                onChange={(e) => setTipo(e.target.value)}
+                                className="w-full p-2 bg-slate-700 rounded-lg h-[42px]">
+                                <option>Entrada</option>
+                                <option>Saída</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Quantidade</label>
+                            <input type="text" min="1"
+                                value={modalQuantidade}
+                                onChange={(e) => setModalQuantidade(e.target.value)}
+                                className="w-full p-2 bg-slate-700 rounded-lg" />
+                        </div>
+                        <div className="block text-sm font-medium mb-1">
+                            <label className="block text-sm font-medium mb-1">Observação</label>
+                            <input type="text" value={observacao.toUpperCase()}
+                                onChange={(e) => setObservacao(e.target.value)}
+                                className="w-full p-2 bg-slate-700 rounded-lg h-[50px]" />
+                        </div>
+                        <button type="submit"
+                            className="md:col-start-3 flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700">
+                            <PlusCircle size={20} /> Adicionar
+                        </button>
+                    </form>
 
-                        <div className="bg-slate-800 rounded-lg p-2 max-h-60 overflow-y-auto">
-                            <table className="w-full text-left">
-                                <thead className="bg-slate-700 rounded-md border-b border-slate-700">
+                    <div className="bg-slate-800 rounded-lg p-2 max-h-60 overflow-y-auto">
+                        <table className="w-full text-left">
+                            <thead className="bg-slate-700 rounded-md border-b border-slate-700">
                                 <tr className='text-sm'>
                                     <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Produto</th>
                                     <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Quantidade</th>
                                     <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase"></th>
                                 </tr>
-                                </thead>
+                            </thead>
 
-                                <tbody className="divide-y divide-slate-700">
+                            <tbody className="divide-y divide-slate-700">
                                 {itensTemporarios.length > 0 ? (
                                     itensTemporarios.map((item) => (
                                         <tr key={item.produto_id} className="border-t hover:bg-slate-700/50">
@@ -262,8 +262,8 @@ export default function MovimentosPage() {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-center">
                                                 <button onClick={() => handleRemoveItemDoModal(item.produto_id)}
-                                                        className="text-red-500 hover:text-red-400">
-                                                    <Trash2 size={18}/>
+                                                    className="text-red-500 hover:text-red-400">
+                                                    <Trash2 size={18} />
                                                 </button>
                                             </td>
                                         </tr>
@@ -276,23 +276,23 @@ export default function MovimentosPage() {
                                         </td>
                                     </tr>
                                 )}
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        <div className="flex justify-end items-center gap-4 pt-4">
-                            <button onClick={handleFecharModal}
-                                    className="bg-slate-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-slate-500">Cancelar
-                            </button>
-                            <button onClick={handleSalvarModal}
-                                    className="flex items-center gap-2 bg-green-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-700">
-                                <Save size={20}/> Salvar Movimentações
-                            </button>
-                        </div>
+                    <div className="flex justify-end items-center gap-4 pt-4">
+                        <button onClick={handleFecharModal}
+                            className="bg-slate-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-slate-500">Cancelar
+                        </button>
+                        <button onClick={handleSalvarModal}
+                            className="flex items-center gap-2 bg-green-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-700">
+                            <Save size={20} /> Salvar Movimentações
+                        </button>
+                    </div>
                 </Modal>
 
                 <div className="flex items-center space-x-4 logo">
-                    <Image src={logo} alt="Logo" className="w-[60px] h-[60px]"/>
+                    <Image src={logo} alt="Logo" className="w-[60px] h-[60px]" />
 
                     <h1 className="text-xl font-bold text-slate-100 hidden sm:block">
                         Movimentações de Estoque
@@ -312,8 +312,8 @@ export default function MovimentosPage() {
                 <div className="flex items-center gap-2">
                     <label htmlFor="FiltroTipo">Tipo de Movimentação: </label>
                     <select value={filtroTipoMov}
-                            onChange={(e) => setFiltroTipoMov(e.target.value)}
-                            className="w-45 p-2 bg-slate-700 border-slate-600 rounded-lg shadow-sm cursor-pointer mr-2">
+                        onChange={(e) => setFiltroTipoMov(e.target.value)}
+                        className="w-45 p-2 bg-slate-700 border-slate-600 rounded-lg shadow-sm cursor-pointer mr-2">
 
                         <option value="Todos">Todos</option>
                         <option value="Entrada">Entradas</option>
@@ -338,8 +338,8 @@ export default function MovimentosPage() {
                     </div>
 
                     <button type="button" onClick={() => limparCamposBusca()}
-                            className="text-red-800 hover:text-red-900 cursor-pointer">
-                        <X/>
+                        className="text-red-800 hover:text-red-900 cursor-pointer">
+                        <X />
                     </button>
                 </div>
 
@@ -347,8 +347,8 @@ export default function MovimentosPage() {
 
                     <div className="md:col-span-3 flex justify-end pt-4">
                         <button onClick={() => setIsModalOpen(true)}
-                                className="flex items-center gap-2 bg-green-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-700">
-                            <Plus className="w-5 h-5"/> Adicionar Movimentação
+                            className="flex items-center gap-2 bg-green-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-700">
+                            <Plus className="w-5 h-5" /> Adicionar Movimentação
                         </button>
                     </div>
                 </div>
@@ -365,70 +365,65 @@ export default function MovimentosPage() {
                 <table className="w-full text-left">
                     <thead className="bg-slate-700 border-b border-slate-700">
 
-                    <tr>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Produto</th>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Tipo</th>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Quantidade</th>
+                        <tr>
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Produto</th>
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Tipo</th>
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Quantidade</th>
 
-                        {usuarioLogado?.role === "Administradores" && (
-                            <>
-                                <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Usuário</th>
-                                <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Data Movimentação</th>
-                            </>
-                        )}
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Observação</th>
-                    </tr>
+
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Usuário</th>
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Data Movimentação</th>
+
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center">Observação</th>
+                        </tr>
                     </thead>
 
                     <tbody className="divide-y divide-slate-700">
-                    {movimentosFiltrados.length > 0 ? (
-                        movimentosFiltrados.map(
-                            (m) => (
-                                <tr key={m.id} className="hover:bg-slate-700/50">
-                                    <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-100">
-                                        {m.produtos?.nome}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                        {movimentosFiltrados.length > 0 ? (
+                            movimentosFiltrados.map(
+                                (m) => (
+                                    <tr key={m.id} className="hover:bg-slate-700/50">
+                                        <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-100">
+                                            {m.produtos?.nome}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-center">
                                             <span className={`p-2 text-xs font-semibold rounded-xl 
                                             ${m.tipo === 'Entrada'
-                                                ? 'bg-green-500/20 text-green-400 '
-                                                : 'bg-red-500/20 text-red-400'
-                                            }`}>
+                                                    ? 'bg-green-500/20 text-green-400 '
+                                                    : 'bg-red-500/20 text-red-400'
+                                                }`}>
                                                 {m.tipo.toUpperCase()}
                                             </span>
-                                    </td>
+                                        </td>
 
-                                    <td className="px-6 py-4 whitespace-nowrap text-slate-300 font-mono text-center">
-                                        {m.quantidade}
-                                    </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-slate-300 font-mono text-center">
+                                            {m.quantidade}
+                                        </td>
 
-                                    {usuarioLogado?.role === "Administradores" && (
-                                        <>
-                                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-center">
-                                                {m.usuarios?.nome}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm text-center">
-                                                {new Date(m.created_at).toLocaleString("pt-BR", {
-                                                    day: "2-digit",
-                                                    month: "2-digit",
-                                                    year: "numeric"
-                                                })}
-                                            </td>
-                                        </>
-                                    )}
-                                    <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm text-center">
-                                        {m.observacao?.toUpperCase()}
-                                    </td>
-                                </tr>
+
+                                        <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-center">
+                                            {m.usuarios?.nome}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm text-center">
+                                            {new Date(m.created_at).toLocaleString("pt-BR", {
+                                                day: "2-digit",
+                                                month: "2-digit",
+                                                year: "numeric"
+                                            })}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm text-center">
+                                            {m.observacao?.toUpperCase()}
+                                        </td>
+                                    </tr>
+                                )
                             )
-                        )
-                    ) : (
-                        <tr>
-                            <td colSpan={6} className="px-6 py-4 text-center text-slate-400">
-                                Nenhuma movimentação encontrada
-                            </td>
-                        </tr>
-                    )}
+                        ) : (
+                            <tr>
+                                <td colSpan={6} className="px-6 py-4 text-center text-slate-400">
+                                    Nenhuma movimentação encontrada
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

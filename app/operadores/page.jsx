@@ -1,9 +1,9 @@
 "use client"
-import {useEffect, useState, useTransition} from "react"
+import { useEffect, useState, useTransition } from "react"
 import logo from "@/assets/logo2.png"
 import Image from "next/image"
-import {useRouter} from "next/navigation"
-import {Edit, Plus, Save, X} from "lucide-react"
+import { useRouter } from "next/navigation"
+import { Edit, Plus, Save, X } from "lucide-react"
 import Modal from "@/app/components/modal";
 
 export default function OperadoresPage() {
@@ -14,8 +14,7 @@ export default function OperadoresPage() {
     const [senha, setSenha] = useState("")
     const [nome, setNome] = useState("")
     const [nomeBusca, setNomeBusca] = useState("")
-    const [role, setRole] = useState("Usuários")
-    const [roleBusca, setRoleBusca] = useState("")
+
     const [status, setStatus] = useState("Ativo")
     const [statusBusca, setStatusBusca] = useState("")
 
@@ -24,14 +23,14 @@ export default function OperadoresPage() {
     const [isPending, startTransition] = useTransition()
     const router = useRouter()
 
-    const [notification, setNotification] = useState({text: '', type: ''})
+    const [notification, setNotification] = useState({ text: '', type: '' })
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const showNotification = (text, type, duration = 2000) => {
-        setNotification({text, type});
+        setNotification({ text, type });
         if (type !== 'isLoading') {
             setTimeout(() => {
-                setNotification({text: '', type: 'info'})
+                setNotification({ text: '', type: 'info' })
             }, duration)
         }
     }
@@ -41,13 +40,13 @@ export default function OperadoresPage() {
         setUsuario('')
         setSenha('')
         setNome('')
-        setRole('Usuários')
+
         setStatus('Ativo')
     }
 
     const limparCamposBusca = () => {
         setNomeBusca('')
-        setRoleBusca('')
+
         setStatusBusca('')
     }
 
@@ -78,9 +77,7 @@ export default function OperadoresPage() {
         if (statusBusca) {
             params.append("status", statusBusca)
         }
-        if (roleBusca) {
-            params.append("role", roleBusca)
-        }
+
 
         const url = params.toString()
             ? `api/operadores?${params.toString()}`
@@ -93,7 +90,7 @@ export default function OperadoresPage() {
 
     useEffect(() => {
         buscarOperadores()
-    }, [nomeBusca, statusBusca, roleBusca])
+    }, [nomeBusca, statusBusca])
 
     const salvarOperador = async (e) => {
         e.preventDefault()
@@ -102,13 +99,13 @@ export default function OperadoresPage() {
         let method = editando ? "PUT" : "POST"
 
         const body = editando
-            ? {id: editando, usuario, senha, nome, role, status}
-            : {usuario, senha, nome, role, status}
+            ? { id: editando, usuario, senha, nome, status }
+            : { usuario, senha, nome, status }
 
         try {
             const res = await fetch(url, {
                 method,
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
             })
 
@@ -138,7 +135,7 @@ export default function OperadoresPage() {
         setEditando(op.id)
         setUsuario(op.usuario)
         setNome(op.nome)
-        setRole(op.role)
+
         setSenha("")
         setStatus(op.status)
     }
@@ -150,7 +147,7 @@ export default function OperadoresPage() {
     if (isLoading || isPending || !usuarioLogado) {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen bg-slate-900">
-                <Image src={logo} alt="Logo" className="w-[80px] h-[80px] mb-4 animate-pulse"/>
+                <Image src={logo} alt="Logo" className="w-[80px] h-[80px] mb-4 animate-pulse" />
             </div>
         )
     }
@@ -178,7 +175,7 @@ export default function OperadoresPage() {
                         <div className="grid grid-cols-3 gap-4">
                             <div>
                                 <label htmlFor="nome"
-                                       className="block text-sm font-medium text-gray-300 mb-1">Nome</label>
+                                    className="block text-sm font-medium text-gray-300 mb-1">Nome</label>
                                 <input
                                     id="nome"
                                     type="text"
@@ -191,7 +188,7 @@ export default function OperadoresPage() {
 
                             <div>
                                 <label htmlFor="usuario"
-                                       className="block text-sm font-medium text-gray-300 mb-1">Usuário</label>
+                                    className="block text-sm font-medium text-gray-300 mb-1">Usuário</label>
                                 <input
                                     id="usuario"
                                     type="text"
@@ -204,7 +201,7 @@ export default function OperadoresPage() {
 
                             <div>
                                 <label htmlFor="senha"
-                                       className="block text-sm font-medium text-gray-300 mb-1">Senha</label>
+                                    className="block text-sm font-medium text-gray-300 mb-1">Senha</label>
                                 <input
                                     id="senha"
                                     type="password"
@@ -217,7 +214,7 @@ export default function OperadoresPage() {
 
                             <div>
                                 <label htmlFor="status"
-                                       className="block text-sm font-medium text-gray-300 mb-1">Status</label>
+                                    className="block text-sm font-medium text-gray-300 mb-1">Status</label>
                                 <select
                                     id="status"
                                     value={status}
@@ -229,19 +226,7 @@ export default function OperadoresPage() {
                                 </select>
                             </div>
 
-                            <div>
-                                <label htmlFor="role"
-                                       className="block text-sm font-medium text-gray-300 mb-1">Grupo</label>
-                                <select
-                                    id="role"
-                                    value={role}
-                                    onChange={(e) => setRole(e.target.value)}
-                                    className="w-full p-2.5 bg-slate-700 border-slate-600 text-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
 
-                                    <option value="Usuários">Usuário</option>
-                                    <option value="Administradores">Administrador</option>
-                                </select>
-                            </div>
                         </div>
 
                         <div className="flex justify-end space-x-3 pt-4">
@@ -256,12 +241,12 @@ export default function OperadoresPage() {
                                 className="flex items-center gap-2 bg-green-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-700 cursor-pointer">
                                 {editando ? (
                                     <>
-                                        <Save className="w-5 h-5"/>
+                                        <Save className="w-5 h-5" />
                                         Salvar Alterações
                                     </>
                                 ) : (
                                     <>
-                                        <Plus className="w-5 h-5"/>
+                                        <Plus className="w-5 h-5" />
                                         Adicionar Operador
                                     </>
                                 )}
@@ -271,7 +256,7 @@ export default function OperadoresPage() {
                 </Modal>
 
                 <div className="flex items-center space-x-4 logo">
-                    <Image src={logo} alt="Logo" className="w-[60px] h-[60px]"/>
+                    <Image src={logo} alt="Logo" className="w-[60px] h-[60px]" />
                     <span className="text-xl font-bold text-white hidden sm:block">Gerenciar Operadores</span>
                 </div>
 
@@ -308,21 +293,11 @@ export default function OperadoresPage() {
                         <option value="Inativo">Inativo</option>
                     </select>
 
-                    <label className="block text-sm font-medium text-gray-300 mb-1">Grupo:</label>
-                    <select
-                        id="role"
-                        value={roleBusca}
-                        onChange={(e) => setRoleBusca(e.target.value)}
-                        className="w-[150] p-2.5 bg-slate-700 border-slate-600 text-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
 
-                        <option value="">Todos</option>
-                        <option value="Usuários">Usuário</option>
-                        <option value="Administradores">Administrador</option>
-                    </select>
 
                     <button type="button" onClick={() => limparCamposBusca()}
-                            className="text-red-800 hover:text-red-900 cursor-pointer">
-                        <X/>
+                        className="text-red-800 hover:text-red-900 cursor-pointer">
+                        <X />
                     </button>
                 </div>
 
@@ -330,8 +305,8 @@ export default function OperadoresPage() {
 
                     <div className="md:col-span-3 flex justify-end pt-4">
                         <button onClick={() => setIsModalOpen(true)}
-                                className="flex items-center gap-2 bg-green-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-700">
-                            <Plus className="w-5 h-5"/> Cadastrar Operador
+                            className="flex items-center gap-2 bg-green-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-green-700">
+                            <Plus className="w-5 h-5" /> Cadastrar Operador
                         </button>
                     </div>
                 </div>
@@ -347,51 +322,42 @@ export default function OperadoresPage() {
                 <table className="w-full text-left">
 
                     <thead className="bg-slate-700">
-                    <tr>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Nome</th>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Usuário</th>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Grupo</th>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Status</th>
-                        <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center"></th>
-                    </tr>
+                        <tr>
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Nome</th>
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Usuário</th>
+
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase">Status</th>
+                            <th className="px-6 py-3 text-sm font-medium text-slate-300 uppercase text-center"></th>
+                        </tr>
                     </thead>
 
                     <tbody className="divide-y divide-slate-700">
-                    {operadores.map((op) => (
-                        <tr key={op.id} className="hover:bg-slate-700/50">
-                            <td className="px-6 py-4 whitespace-nowrap text-white">{op.nome}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{op.usuario}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        className={`p-2 text-xs font-semibold rounded-xl ${op.role === "Administradores"
-                                            ? "bg-blue-500/20 text-blue-300"
-                                            : "bg-green-500/20 text-green-300"
-                                        }`}>
+                        {operadores.map((op) => (
+                            <tr key={op.id} className="hover:bg-slate-700/50">
+                                <td className="px-6 py-4 whitespace-nowrap text-white">{op.nome}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{op.usuario}</td>
 
-                                        {op.role.toUpperCase()}
-                                    </span>
-                            </td>
 
-                            <td className="px-6 py-4 whitespace-nowrap">
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     <span
                                         className={`p-2 text-xs font-semibold rounded-xl ${op.status === "Ativo"
                                             ? "bg-green-500/20 text-green-300"
                                             : "bg-red-500/20 text-red-300"
-                                        }`}>
+                                            }`}>
 
                                         {op.status.toUpperCase()}
                                     </span>
-                            </td>
+                                </td>
 
-                            <td className="px-6 py-4 text-center">
-                                <button
-                                    onClick={() => editarOperador(op)}
-                                    className="text-blue-400 hover:text-blue-300 mr-4 cursor-pointer">
-                                    <Edit/>
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                <td className="px-6 py-4 text-center">
+                                    <button
+                                        onClick={() => editarOperador(op)}
+                                        className="text-blue-400 hover:text-blue-300 mr-4 cursor-pointer">
+                                        <Edit />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

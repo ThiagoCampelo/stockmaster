@@ -4,16 +4,12 @@ Sistema moderno de gerenciamento de estoque desenvolvido para otimizar o control
 
 ## 🚀 Sobre o Projeto
 
-StockMaster é uma aplicação web completa para controle de produtos, movimentações de estoque (entradas e saídas) e gestão de usuários. O sistema conta com validações de segurança (prevenção de estoque negativo), níveis de acesso (Administrador/Operador) e sugestões automáticas de compras.
+StockMaster é uma aplicação web completa para controle de produtos, movimentações de estoque (entradas e saídas) e gestão de usuários. O sistema conta com validações de segurança (prevenção de estoque negativo) e sugestões automáticas de compras.
 
 ### ✨ Funcionalidades Principais
 
 -   **🔐 Autenticação Segura**: Login com verificação de credenciais e controle de sessão.
 -   **📦 Gestão de Produtos**: Cadastro, edição e visualização de produtos com histórico detalhado.
--   **🔄 Controle de Movimentações**: Registro de entradas e saídas de estoque com validação de saldo disponível.
--   **📊 Histórico e Auditoria**: Rastreamento completo de quem realizou cada operação (log de movimentações).
--   **💡 Sugestão de Compras**: Análise inteligente para reposição de estoque.
--   **👤 Gestão de Usuários**: Painel administrativo para gerenciar operadores e acessos.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -56,6 +52,18 @@ StockMaster é uma aplicação web completa para controle de produtos, movimenta
     ```
 
 5.  Acesse a aplicação em [http://localhost:3000](http://localhost:3000).
+
+### Banco de Dados (Schema)
+
+O esquema do banco de dados (tabelas e funções) está disponível no arquivo [`database_schema.sql`](./database_schema.sql).
+
+**Como usar:**
+Copie o conteúdo deste arquivo e execute no **SQL Editor** do seu projeto no Supabase para criar as tabelas necessárias automaticamente.
+
+**Acesso Inicial:**
+Após rodar o script, um usuário padrão será criado automaticamente:
+- **Usuário:** `admin`
+- **Senha:** `admin`
 
 ---
 

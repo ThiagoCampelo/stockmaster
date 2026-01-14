@@ -1,4 +1,4 @@
-import {createClient} from "@supabase/supabase-js"
+import { createClient } from "@supabase/supabase-js"
 import md5 from "md5"
 
 const supabase = createClient(
@@ -7,11 +7,10 @@ const supabase = createClient(
 )
 
 export async function GET(req) {
-    const {searchParams} = new URL(req.url)
+    const { searchParams } = new URL(req.url)
 
     const nome = searchParams.get("nome")
     const status = searchParams.get("status")
-    const role = searchParams.get("role")
 
     let query = supabase
         .from("usuarios")
@@ -30,14 +29,9 @@ export async function GET(req) {
             `%${status}%`
         )
     }
-    if (role) {
-        query = query.ilike(
-            "role",
-            `%${role}%`
-        )
-    }
 
-    const {data, error} = await query
+
+    const { data, error } = await query
 
     if (error) {
         return new Response(
@@ -46,8 +40,8 @@ export async function GET(req) {
                     error: error.message
                 }
             ), {
-                status: 400
-            }
+            status: 400
+        }
         )
     }
     return new Response(
@@ -59,7 +53,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-    const {usuario, senha, nome, role, status} = await req.json()
+    const { usuario, senha, nome, status } = await req.json()
 
     if (!usuario || !senha) {
         return new Response(
@@ -68,20 +62,19 @@ export async function POST(req) {
                     error: "Usuário e senha obrigatórios"
                 }
             ), {
-                status: 400
-            }
+            status: 400
+        }
         )
     }
 
-    const {data, error} = await supabase
+    const { data, error } = await supabase
         .from("usuarios")
         .insert(
             [
                 {
                     usuario,
                     senha: md5(senha),
-                    nome,
-                    role: role || "Usuários"
+                    nome
                 }
             ]
         )
@@ -89,7 +82,6 @@ export async function POST(req) {
             "id," +
             " usuario," +
             " nome, " +
-            "role, " +
             "created_at, " +
             "status"
         )
@@ -102,8 +94,8 @@ export async function POST(req) {
                     error: error.message
                 }
             ), {
-                status: 400
-            }
+            status: 400
+        }
         )
     }
     return new Response(
@@ -115,7 +107,7 @@ export async function POST(req) {
 }
 
 export async function PUT(req) {
-    const {id, usuario, senha, nome, role, status} = await req.json()
+    const { id, usuario, senha, nome, status } = await req.json()
 
     if (!id) {
         return new Response(
@@ -124,15 +116,14 @@ export async function PUT(req) {
                     error: "ID é obrigatório"
                 }
             ), {
-                status: 400
-            }
+            status: 400
+        }
         )
     }
 
     const updateData = {
         usuario,
         nome,
-        role,
         status
     }
 
@@ -140,7 +131,7 @@ export async function PUT(req) {
         updateData.senha = md5(senha)
     }
 
-    const {data, error} = await supabase
+    const { data, error } = await supabase
         .from("usuarios")
         .update(updateData)
         .eq("id", id)
@@ -148,7 +139,6 @@ export async function PUT(req) {
             "id," +
             "usuario, " +
             "nome, " +
-            "role," +
             "created_at," +
             "status"
         )
@@ -161,8 +151,8 @@ export async function PUT(req) {
                     error: error.message
                 }
             ), {
-                status: 400
-            }
+            status: 400
+        }
         )
     }
     return new Response(
@@ -174,7 +164,7 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
-    const {id} = await req.json()
+    const { id } = await req.json()
 
     if (!id) {
         return new Response(
@@ -183,12 +173,12 @@ export async function DELETE(req) {
                     error: "ID é obrigatório"
                 }
             ), {
-                status: 400
-            }
+            status: 400
+        }
         )
     }
 
-    const {error} = await supabase.from("usuarios").delete().eq("id", id)
+    const { error } = await supabase.from("usuarios").delete().eq("id", id)
 
     if (error) {
         return new Response(
@@ -197,8 +187,8 @@ export async function DELETE(req) {
                     error: error.message
                 }
             ), {
-                status: 400
-            }
+            status: 400
+        }
         )
     }
 
@@ -208,7 +198,7 @@ export async function DELETE(req) {
                 success: true
             }
         ), {
-            status: 200
-        }
+        status: 200
+    }
     )
 }

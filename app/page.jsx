@@ -150,14 +150,12 @@ export default function HomePage() {
                         <p className="text-gray-300 mt-2 text-sm">Análise e sugestão de compras de produtos.</p>
                     </div>
 
-                    {usuarioLogado?.role === "Administradores" && (
-                        <div
-                            onClick={() => handleNavigate("/operadores")}
-                            className="cursor-pointer flex flex-col items-center justify-center p-8 bg-slate-700 border border-slate-600 rounded-lg shadow-md aspect-square hover:bg-slate-600 transition-colors duration-300 text-center">
-                            <h2 className="text-2xl font-semibold text-white">Gerenciar Operadores</h2>
-                            <p className="text-gray-300 mt-2 text-sm">Adicione ou remova usuários.</p>
-                        </div>
-                    )}
+                    <div
+                        onClick={() => handleNavigate("/operadores")}
+                        className="cursor-pointer flex flex-col items-center justify-center p-8 bg-slate-700 border border-slate-600 rounded-lg shadow-md aspect-square hover:bg-slate-600 transition-colors duration-300 text-center">
+                        <h2 className="text-2xl font-semibold text-white">Gerenciar Operadores</h2>
+                        <p className="text-gray-300 mt-2 text-sm">Adicione ou remova usuários.</p>
+                    </div>
                 </div>
             </div>
 
