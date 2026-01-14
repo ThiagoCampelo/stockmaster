@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+body {
+    background: #0f172a;
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 2em rgba(183, 100, 255, 0.85));
+}
+
+@keyframes expand {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(50);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(100);
+        opacity: 0;
+    }
+}
+
+.expand-circle {
+    border-radius: 9999px;
+    animation: expand 4s ease-out forwards;
+}
+
+.circle-1 {
+    width: 6rem;
+    height: 6rem;
+    background-color: #475569;
+    animation-delay: 0s;
+}
+
+.custom-date-icon::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.5);
+    cursor: pointer;
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.3);
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(148, 163, 184, 0.6);
+}
+
+.scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
